@@ -72,6 +72,12 @@ void radio_set_txpower(enum radio_txpower txpower)
 	RADIO_TXPOWER = txpower;
 }
 
+/** @brief Get radio transmission power. */
+int8_t radio_get_txpower(void)
+{
+	return (int8_t)RADIO_TXPOWER;
+}
+
 /** @brief Set bit transmission order to LSB first. */
 void radio_set_lsbfirst(void)
 {
@@ -204,6 +210,16 @@ void radio_configure_packet(uint8_t lf_len_bits, uint8_t s0_len_bytes, uint8_t s
 void radio_set_frequency(uint8_t freq)
 {
 	RADIO_FREQUENCY = freq;
+}
+
+/** @brief Get radio frequency.
+ *
+ * @returns freq uint8_t Frequency offset from 2.4GHz in MHz, for example "29" means
+ *  the radio is tuned to 2429MHz
+ */
+uint8_t radio_get_frequency(void)
+{
+	return (uint8_t)RADIO_FREQUENCY;
 }
 
 /** @brief Set Data Whitening Initialization Vector.
