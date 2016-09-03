@@ -186,7 +186,6 @@ void radio_configure_ble(void)
 
 	radio_set_crclen(RADIO_BLE_CRCLEN);
 	RADIO_CRCPOLY = RADIO_BLE_CRCPOLY;
-	RADIO_CRCINIT = RADIO_BLE_CRCINIT;
 	radio_set_crc_skipaddr(true);
 	radio_set_balen(3);
 }
@@ -360,4 +359,13 @@ void radio_disable_rx_address(uint8_t addr_index)
 void radio_disable_rx_addresses(uint8_t mask)
 {
 	RADIO_RXADDRESSES &= ~mask;
+}
+
+/* @brief Set initial value for CRC calculation.
+ *
+ * @param[in] crcinit uint32_t initial value for CRC calculation.
+ */
+void radio_set_crcinit(uint32_t crcinit)
+{
+	RADIO_CRCINIT = crcinit;
 }

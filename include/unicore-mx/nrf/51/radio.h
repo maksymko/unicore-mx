@@ -244,7 +244,6 @@
 #define RADIO_BLE_TIFS			(150)
 #define RADIO_BLE_CRCLEN			(3)
 #define RADIO_BLE_CRCPOLY			(0x65B)
-#define RADIO_BLE_CRCINIT			(0x555555)
 
 enum radio_txpower {
 	RADIO_TXPOWER_POS_4DBM = 0x4,
@@ -282,6 +281,7 @@ void radio_configure_ble(void);
 void radio_disable_crc(void);
 void radio_disable(void);
 void radio_enable(void);
+void radio_set_crcinit(uint32_t crcinit);
 void radio_set_crclen(uint8_t crc_len);
 void radio_set_lsbfirst(void);
 void radio_set_mode(enum radio_mode mode);
