@@ -321,3 +321,43 @@ void radio_disable_interrupts(uint32_t interrupts)
 {
 	RADIO_INTENCLR = interrupts;
 }
+
+/* @brief Enable reception of logical address.
+ *
+ * @param[in] addr_index uint8_t logical address index (0 - 7)
+ */
+void radio_enable_rx_address(uint8_t addr_index)
+{
+	RADIO_RXADDRESSES |= RADIO_RXADDRESSES_ADDR(addr_index);
+}
+
+/* @brief Enable reception of logical addresses, given address mask.
+ *
+ * Bit0 corresponds to logical address 0, bit7 to logical address 7.
+ *
+ * @param[in] mask uint8_t logical address mask.
+ */
+void radio_enable_rx_addresses(uint8_t mask)
+{
+	RADIO_RXADDRESSES |= mask;
+}
+
+/* @brief Disable reception of logical address.
+ *
+ * @param[in] addr_index uint8_t logical address index (0 - 7)
+ */
+void radio_disable_rx_address(uint8_t addr_index)
+{
+	RADIO_RXADDRESSES &= ~(RADIO_RXADDRESSES_ADDR(addr_index));
+}
+
+/* @brief Disable reception of logical addresses, given address mask.
+ *
+ * Bit0 corresponds to logical address 0, bit7 to logical address 7.
+ *
+ * @param[in] mask uint8_t logical address mask.
+ */
+void radio_disable_rx_addresses(uint8_t mask)
+{
+	RADIO_RXADDRESSES &= ~mask;
+}
