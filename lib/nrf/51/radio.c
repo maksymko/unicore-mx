@@ -72,6 +72,12 @@ void radio_set_txpower(enum radio_txpower txpower)
 	RADIO_TXPOWER = txpower;
 }
 
+/** @brief Get radio transmission power. */
+int8_t radio_get_txpower(void)
+{
+	return (int8_t)RADIO_TXPOWER;
+}
+
 /** @brief Set bit transmission order to LSB first. */
 void radio_set_lsbfirst(void)
 {
@@ -180,7 +186,6 @@ void radio_configure_ble(void)
 
 	radio_set_crclen(RADIO_BLE_CRCLEN);
 	RADIO_CRCPOLY = RADIO_BLE_CRCPOLY;
-	RADIO_CRCINIT = RADIO_BLE_CRCINIT;
 	radio_set_crc_skipaddr(true);
 	radio_set_balen(3);
 }
@@ -204,6 +209,16 @@ void radio_configure_packet(uint8_t lf_len_bits, uint8_t s0_len_bytes, uint8_t s
 void radio_set_frequency(uint8_t freq)
 {
 	RADIO_FREQUENCY = freq;
+}
+
+/** @brief Get radio frequency.
+ *
+ * @returns freq uint8_t Frequency offset from 2.4GHz in MHz, for example "29" means
+ *  the radio is tuned to 2429MHz
+ */
+uint8_t radio_get_frequency(void)
+{
+	return (uint8_t)RADIO_FREQUENCY;
 }
 
 /** @brief Set Data Whitening Initialization Vector.
@@ -304,4 +319,53 @@ void radio_enable_interrupts(uint32_t interrupts)
 void radio_disable_interrupts(uint32_t interrupts)
 {
 	RADIO_INTENCLR = interrupts;
+}
+
+/* @brief Enable reception of logical address.
+ *
+ * @param[in] addr_index uint8_t logical address index (0 - 7)
+ */
+void radio_enable_rx_address(uint8_t addr_index)
+{
+	RADIO_RXADDRESSES |= RADIO_RXADDRESSES_ADDR(addr_index);
+}
+
+/* @brief Enable reception of logical addresses, given address mask.
+ *
+ * Bit0 corresponds to logical address 0, bit7 to logical address 7.
+ *
+ * @param[in] mask uint8_t logical address mask.
+ */
+void radio_enable_rx_addresses(uint8_t mask)
+{
+	RADIO_RXADDRESSES |= mask;
+}
+
+/* @brief Disable reception of logical address.
+ *
+ * @param[in] addr_index uint8_t logical address index (0 - 7)
+ */
+void radio_disable_rx_address(uint8_t addr_index)
+{
+	RADIO_RXADDRESSES &= ~(RADIO_RXADDRESSES_ADDR(addr_index));
+}
+
+/* @brief Disable reception of logical addresses, given address mask.
+ *
+ * Bit0 corresponds to logical address 0, bit7 to logical address 7.
+ *
+ * @param[in] mask uint8_t logical address mask.
+ */
+void radio_disable_rx_addresses(uint8_t mask)
+{
+	RADIO_RXADDRESSES &= ~mask;
+}
+
+/* @brief Set initial value for CRC calculation.
+ *
+ * @param[in] crcinit uint32_t initial value for CRC calculation.
+ */
+void radio_set_crcinit(uint32_t crcinit)
+{
+	RADIO_CRCINIT = crcinit;
 }

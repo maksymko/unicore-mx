@@ -197,15 +197,15 @@
 #define RADIO_PREFIX_AP_MASKED(n, V)			(((V) << RADIO_PREFIX_AP_SHIFT(n)) & RADIO_PREFIX_AP_MASK(n))
 #define RADIO_PREFIX_AP_SET(n, V)			if ((n) < 4) { RADIO_PREFIX0 = (V); } else { RADIO_PREFIX1 = (V); }
 
-#define RADIO_TXADDRESSES_ADDR0			(1 << 0)
-#define RADIO_TXADDRESSES_ADDR1			(1 << 1)
-#define RADIO_TXADDRESSES_ADDR2			(1 << 2)
-#define RADIO_TXADDRESSES_ADDR3			(1 << 3)
-#define RADIO_TXADDRESSES_ADDR4			(1 << 4)
-#define RADIO_TXADDRESSES_ADDR5			(1 << 5)
-#define RADIO_TXADDRESSES_ADDR6			(1 << 6)
-#define RADIO_TXADDRESSES_ADDR7			(1 << 7)
-#define RADIO_TXADDRESSES_ADDR(n)			(1 << (n))
+#define RADIO_RXADDRESSES_ADDR0			(1 << 0)
+#define RADIO_RXADDRESSES_ADDR1			(1 << 1)
+#define RADIO_RXADDRESSES_ADDR2			(1 << 2)
+#define RADIO_RXADDRESSES_ADDR3			(1 << 3)
+#define RADIO_RXADDRESSES_ADDR4			(1 << 4)
+#define RADIO_RXADDRESSES_ADDR5			(1 << 5)
+#define RADIO_RXADDRESSES_ADDR6			(1 << 6)
+#define RADIO_RXADDRESSES_ADDR7			(1 << 7)
+#define RADIO_RXADDRESSES_ADDR(n)			(1 << (n))
 
 #define RADIO_CRCCNF_LEN_SHIFT			(0)
 #define RADIO_CRCCNF_LEN_MASK			(3 << RADIO_CRCCNF_LEN_SHIFT)
@@ -244,7 +244,6 @@
 #define RADIO_BLE_TIFS			(150)
 #define RADIO_BLE_CRCLEN			(3)
 #define RADIO_BLE_CRCPOLY			(0x65B)
-#define RADIO_BLE_CRCINIT			(0x555555)
 
 enum radio_txpower {
 	RADIO_TXPOWER_POS_4DBM = 0x4,
@@ -282,19 +281,26 @@ void radio_configure_ble(void);
 void radio_disable_crc(void);
 void radio_disable(void);
 void radio_enable(void);
+void radio_set_crcinit(uint32_t crcinit);
 void radio_set_crclen(uint8_t crc_len);
 void radio_set_lsbfirst(void);
 void radio_set_mode(enum radio_mode mode);
 void radio_set_msbfirst(void);
 void radio_set_txpower(enum radio_txpower txpower);
+int8_t radio_get_txpower(void);
 void radio_disable_whitening(void);
 void radio_enable_whitening(void);
 void radio_configure_packet(uint8_t lf_len_bits, uint8_t s0_len_bytes, uint8_t s1_len_bits);
 void radio_set_balen(uint8_t ba_len);
 void radio_set_frequency(uint8_t freq);
+uint8_t radio_get_frequency(void);
 void radio_set_datawhiteiv(uint8_t iv);
 void radio_set_addr(uint8_t addr_index, uint32_t base, uint8_t prefix);
 void radio_set_tx_address(uint8_t addr_index);
+void radio_enable_rx_address(uint8_t addr_index);
+void radio_enable_rx_addresses(uint8_t mask);
+void radio_disable_rx_address(uint8_t addr_index);
+void radio_disable_rx_addresses(uint8_t mask);
 void radio_set_packet_ptr(uint8_t* packet_ptr);
 void radio_enable_shorts(uint16_t shorts);
 void radio_disable_shorts(uint16_t shorts);
