@@ -15,8 +15,8 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NRF51_UART_H
-#define NRF51_UART_H
+#ifndef NRF51_I2C_H
+#define NRF51_I2C_H
 
 #include <unicore-mx/cm3/common.h>
 #include <unicore-mx/nrf/memorymap.h>
