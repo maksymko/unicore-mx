@@ -15,8 +15,8 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NRF51_UART_H
-#define NRF51_UART_H
+#ifndef NRF51_I2C_H
+#define NRF51_I2C_H
 
 #include <unicore-mx/cm3/common.h>
 #include <unicore-mx/nrf/memorymap.h>
@@ -163,6 +163,9 @@ void i2c_send_data(uint32_t i2c, uint8_t data);
 uint8_t i2c_get_data(uint32_t i2c);
 void i2c_select_pins(uint32_t i2c, uint8_t scl_pin, uint8_t sda_pin);
 void i2c_set_address(uint32_t i2c, uint8_t addr);
+void i2c_enable_shorts(uint32_t i2c, uint32_t shorts);
+void i2c_disable_shorts(uint32_t i2c, uint32_t shorts);
+void i2c_resume(uint32_t i2c);
 
 END_DECLS
 
