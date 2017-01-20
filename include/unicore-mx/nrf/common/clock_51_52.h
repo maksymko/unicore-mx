@@ -73,4 +73,14 @@ enum clock_lfclk_src {
 	CLOCK_LFCLK_SRC_SYNTH,
 };
 
+BEGIN_DECLS
+
+void clock_start_lfclk(bool wait);
+void clock_stop_lfclk(void);
+void clock_start_hfclk(bool wait);
+void clock_stop_hfclk(void);
+void clock_set_lfclk_src(enum clock_lfclk_src lfclk_src);
+
+END_DECLS
+
 #endif  /* NRF_51_52_CLOCK_H */

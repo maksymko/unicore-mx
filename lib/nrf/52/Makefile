@@ -29,9 +29,9 @@ TGT_CFLAGS	= -Os -Wall -Wextra -I../../../include -fno-common \
 TGT_CFLAGS      += $(DEBUG_FLAGS)
 # ARFLAGS	= rcsv
 ARFLAGS		= rcs
-OBJS		=
+OBJS		= clock.o clock_51_52.o
 
-VPATH += ../../usb:../../cm3
+VPATH += ../../usb:../../cm3:../common
 
 include ../../Makefile.include
 
