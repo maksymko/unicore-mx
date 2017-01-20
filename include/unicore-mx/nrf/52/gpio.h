@@ -15,16 +15,25 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NRF_GPIO_H
-#define NRF_GPIO_H
+#ifndef NRF52_GPIO_H
+#define NRF52_GPIO_H
 
-#if defined(NRF51)
-#	include <unicore-mx/nrf/51/gpio.h>
-#elif defined(NRF52)
-#	include <unicore-mx/nrf/52/gpio.h>
-#else
-#	error "Processor family not defined."
-#endif
+#include <unicore-mx/nrf/common/gpio_51_52.h>
 
-#endif
+/* In nRF52 the instance of the peripheral is called P0 */
 
+#define GPIO_BASE	GPIO0_BASE
+#define P0			(GPIO_BASE)
+
+/* nRF52-specific GPIO Registers */
+#define GPIO_LATCH			MMIO32(GPIO_BASE + 0x520)
+#define GPIO_DETECTMODE		MMIO32(GPIO_BASE + 0x524)
+
+/* nRF52-specific Register contents */
+#define GPIO_DETECTMODE_LDETECT		(1 << 0)
+
+/* GPIO Tasks and Events specific to nRF52 */
+#define GPIO_TASK_SET(n)		MMIO32(GPIO_BASE + 0x030 + 0x4 * (n))
+#define GPIO_TASK_CLR(n)		MMIO32(GPIO_BASE + 0x060 + 0x4 * (n))
+
+#endif  /* NRF52_GPIO_H */
