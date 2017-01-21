@@ -64,4 +64,6 @@
 #define UART_PSEL_OFF			(0xff)
 #define UART_PSEL_DISCONNECT		(1 << 31)
 
+#define UART_PSEL_VAL(p)		((p) <= UART_PSEL_MAX_PIN ? (p) : UART_PSEL_DISCONNECT)
+
 #endif  /* NRF52_UART_H */

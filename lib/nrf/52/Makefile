@@ -29,7 +29,7 @@ TGT_CFLAGS	= -Os -Wall -Wextra -I../../../include -fno-common \
 TGT_CFLAGS      += $(DEBUG_FLAGS)
 # ARFLAGS	= rcsv
 ARFLAGS		= rcs
-OBJS		= clock.o clock_51_52.o gpio_51_52.o
+OBJS		= clock.o clock_51_52.o gpio_51_52.o uart.o uart_51_52.o
 
 VPATH += ../../usb:../../cm3:../common
 

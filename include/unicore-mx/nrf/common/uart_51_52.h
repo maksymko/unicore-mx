@@ -87,4 +87,20 @@ enum uart_baud {
 #define UART_CONFIG_HWFC			(1)
 #define UART_CONFIG_PARITY			(7 << 1)
 
+BEGIN_DECLS
+
+#define uart_enable_interrupts			periph_enable_interrupts
+#define uart_disable_interrupts			periph_disable_interrupts
+
+void uart_enable(uint32_t uart);
+void uart_disable(uint32_t uart);
+void uart_configure(uint32_t uart,
+		uint8_t txd, uint8_t rxd, uint8_t rts, uint8_t cts,
+		enum uart_baud br, bool enable_parity);
+
+void uart_send_buffer_blocking(uint32_t uart, const uint8_t *buffer, uint16_t len);
+void uart_send_string_blocking(uint32_t uart, const char *str);
+
+END_DECLS
+
 #endif  /* NRF_51_52_UART_H */
