@@ -15,15 +15,13 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef NRF_RTC_H
-#define NRF_RTC_H
+#ifndef NRF52_RTC_H
+#define NRF52_RTC_H
 
-#if defined(NRF51)
-#	include <unicore-mx/nrf/51/rtc.h>
-#elif defined(NRF52)
-#	include <unicore-mx/nrf/52/rtc.h>
-#else
-#	error "Processor family not defined."
-#endif
+#include <unicore-mx/nrf/common/rtc_51_52.h>
 
-#endif
+#define RTC0		RTC0_BASE
+#define RTC1		RTC1_BASE
+#define RTC2		RTC2_BASE
+
+#endif  /* NRF52_RTC_H */
