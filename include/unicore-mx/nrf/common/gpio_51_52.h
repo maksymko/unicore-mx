@@ -142,4 +142,26 @@
 #define GPIO_TE_OUTINIT_LOW			(1)
 #define GPIO_TE_OUTINIT_HIGH			GPIO_TE_CONFIG_OUTINIT
 
+BEGIN_DECLS
+
+void gpio_set(uint32_t gpios);
+void gpio_clear(uint32_t gpios);
+void gpio_toggle(uint32_t gpios);
+uint32_t gpio_get(uint32_t gpios);
+
+void gpio_setup_mode(uint32_t gpios, uint8_t dir, uint8_t pull);
+
+void gpio_set_drive(uint32_t gpios, uint8_t drive);
+
+void gpio_configure_task(uint8_t task_num,
+		uint8_t pin_num, uint8_t polarity, uint8_t init);
+
+void gpio_configure_event(uint8_t event_num, uint8_t pin_num, uint8_t polarity);
+
+void gpio_enable_interrupts(uint32_t mask);
+void gpio_disable_interrupts(uint32_t mask);
+void gpio_clear_interrupts(void);
+
+END_DECLS
+
 #endif  /* NRF_51_52_GPIO_H */
