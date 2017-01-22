@@ -15,12 +15,10 @@
  * along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <unicore-mx/nrf/memorymap.h>
 #include <unicore-mx/nrf/uart.h>
 
 /** @brief Send buffer synchronously.
- *
- * For compatibility with nRF51 API length of the buffer is left to be uint16_t,
- * however, only uint8_t is supported by this implementation.
  *
  * @param[in] uart uint32_t uart base
  * @param[in] buffer const uint8_t* buffer to send
@@ -28,10 +26,29 @@
  */
 void uart_send_buffer_blocking(uint32_t uart, const uint8_t *buffer, uint16_t len)
 {
-	UART_TXDPTR(uart) = (uint32_t)buffer;
-	UART_TXDMAXCNT(uart) = (uint8_t)len;
-	periph_trigger_task(UART_TASK_STARTTX(uart));
-	periph_wait_event(UART_EVENT_ENDTX(uart));
+	if ((uint32_t)buffer < SRAM_BASE) {
+		/* The buffer is not in SRAM, can't do EasyDMA, use local buffer */
+		volatile uint8_t local_buffer;
+		UART_TXDPTR(uart) = (uint32_t)&local_buffer;
+		UART_TXDMAXCNT(uart) = 1;
+		for (int i = 0; i < len; ++i) {
+			local_buffer = *(buffer + i);
+			periph_trigger_task(UART_TASK_STARTTX(uart));
+			periph_wait_event(UART_EVENT_ENDTX(uart));
+		}
+	} else {
+		do {
+			uint8_t to_transfer = len > 0xff ? 0xff : (uint8_t)len;
+
+			UART_TXDPTR(uart) = (uint32_t)buffer;
+			UART_TXDMAXCNT(uart) = to_transfer;
+			periph_trigger_task(UART_TASK_STARTTX(uart));
+			len -= to_transfer;
+			buffer += to_transfer;
+			periph_wait_event(UART_EVENT_ENDTX(uart));
+		} while (len);
+	}
+
 	periph_trigger_task(UART_TASK_STOPTX(uart));
 	periph_wait_event(UART_EVENT_TXSTOPPED(uart));
 }
