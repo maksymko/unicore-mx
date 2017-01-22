@@ -56,4 +56,20 @@
 #define RTC_INTEN_COMPARE2			(1 << 18)
 #define RTC_INTEN_COMPARE3			(1 << 19)
 
+BEGIN_DECLS
+
+#define rtc_enable_interrupts			periph_enable_interrupts
+#define rtc_disable_interrupts			periph_disable_interrupts
+
+void rtc_set_prescaler(uint32_t rtc, uint16_t presc);
+uint32_t rtc_get_counter(uint32_t rtc);
+void rtc_enable_events(uint32_t rtc, uint32_t mask);
+void rtc_disable_events(uint32_t rtc, uint32_t mask);
+void rtc_start(uint32_t rtc);
+void rtc_stop(uint32_t rtc);
+void rtc_clear(uint32_t rtc);
+void rtc_set_compare(uint32_t rtc, uint8_t cmp, uint32_t value);
+
+END_DECLS
+
 #endif  /* NRF_51_52_RTC_H */
